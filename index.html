@@ -3,61 +3,207 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>پیش ثبت‌نام رمان جذاب (شبی که عاشقت شدم)</title>
+    <title>پیش‌ثبت‌نام کتاب شبی که عاشقت شدم</title>
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
     <style>
-        :root { --primary: #2563eb; --bg: #f8fafc; }
-        body { font-family: Vazirmatn, sans-serif; background: var(--bg); margin: 0; padding: 20px; display: flex; justify-content: center; }
-        .card { background: white; padding: 2rem; border-radius: 1rem; shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); width: 100%; max-width: 500px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
-        h2 { text-align: center; color: #1e293b; margin-bottom: 1.5rem; }
-        input { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #cbd5e1; border-radius: 8px; box-sizing: border-box; font-family: inherit; }
-        button { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 1rem; font-family: inherit; transition: 0.3s; }
-        button:hover { opacity: 0.9; }
-        #adminPanel { display: none; max-width: 800px; margin-top: 20px; width: 100%; }
-        table { width: 100%; border-collapse: collapse; margin-top: 1rem; background: white; }
-        th, td { border: 1px solid #e2e8f0; padding: 12px; text-align: right; }
-        th { background: #f1f5f9; }
-        .success { color: #16a34a; text-align: center; margin-top: 10px; display: none; }
+        :root {
+            --primary-dark: #0f172a; /* آبی خیلی تیره برای حس شب */
+            --accent-blue: #1e40af; /* آبی کاربنی */
+            --gold: #fbbf24; /* طلایی برای دکمه‌ها و تضاد با آبی */
+            --bg: #f1f5f9;
+        }
+        body {
+            font-family: Vazirmatn, sans-serif;
+            background: var(--bg);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 850px;
+            display: flex;
+            flex-direction: row;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+        }
+        /* بخش نمایش کتاب */
+        .cover-section {
+            flex: 1;
+            background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%); /* طیف آبی تیره */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            text-align: center;
+            color: white;
+        }
+        .book-img {
+            max-width: 220px;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            margin-bottom: 1.5rem;
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+        .book-title {
+            font-size: 1.6rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .book-author {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+        /* بخش فرم */
+        .form-section {
+            flex: 1.2;
+            padding: 3rem;
+            background: #ffffff;
+        }
+        h2 {
+            color: var(--primary-dark);
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
+            border-right: 4px solid var(--accent-blue);
+            padding-right: 10px;
+        }
+        .input-group { margin-bottom: 1.2rem; }
+        label { display: block; margin-bottom: 6px; font-size: 0.85rem; color: #475569; }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            box-sizing: border-box;
+            font-family: inherit;
+            transition: 0.3s;
+        }
+        input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 4px rgba(30, 64, 175, 0.1);
+        }
+        .btn-register {
+            width: 100%;
+            padding: 14px;
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-family: inherit;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(30, 64, 175, 0.2);
+        }
+        .btn-register:hover { background: var(--primary-dark); transform: translateY(-1px); }
+        .success {
+            display: none;
+            background: #dcfce7;
+            color: #166534;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+        .admin-btn {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            margin-top: 2rem;
+            font-size: 0.75rem;
+            width: 100%;
+            text-decoration: underline;
+        }
+
+        /* استایل جدول مدیریت */
+        #adminPanel {
+            display: none;
+            width: 100%;
+            max-width: 900px;
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+        }
+        table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        th, td { padding: 12px; border: 1px solid #e2e8f0; text-align: right; }
+        th { background: var(--accent-blue); color: white; }
+
+        @media (max-width: 768px) {
+            .container { flex-direction: column; margin: 10px; }
+            .cover-section { padding: 3rem 1rem; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- فرم ثبت‌نام -->
-    <div id="registerForm" class="card">
-        <h2>فرم ثبت‌نام جدید</h2>
-        <input type="text" id="name" placeholder="نام و نام خانوادگی">
-        <input type="tel" id="mobile" placeholder="شماره موبایل">
-        <input type="text" id="nationalId" placeholder="کد ملی">
-        <button onclick="register()">ثبت اطلاعات</button>
-        <p id="msg" class="success">اطلاعات با موفقیت ذخیره شد!</p>
-        <hr>
-        <button style="background: #64748b;" onclick="showLogin()">ورود به مدیریت</button>
+    <div id="mainContainer" class="container">
+        <!-- سمت راست: معرفی کتاب -->
+        <div class="cover-section">
+            <img src="12.png" alt="شبی که عاشقت شدم" class="book-img">
+            <div class="book-title">شبی که عاشقت شدم</div>
+            <div class="book-author">پیش‌فروش ویژه نسخه چاپی</div>
+            <p style="font-size: 0.85rem; opacity: 0.9;">با ثبت‌نام در این فرم، جزو اولین کسانی باشید که کتاب را دریافت می‌کنند.</p>
+        </div>
+
+        <!-- سمت چپ: فرم ثبت‌نام -->
+        <div class="form-section">
+            <div id="registerForm">
+                <h2>ثبت‌نام برای رزرو</h2>
+                <div class="input-group">
+                    <label>نام و نام خانوادگی</label>
+                    <input type="text" id="name" placeholder="مثال: محمد محمدی">
+                </div>
+                <div class="input-group">
+                    <label>شماره موبایل</label>
+                    <input type="tel" id="mobile" placeholder="09123456789" style="direction:ltr">
+                </div>
+                <div class="input-group">
+                    <label>کد ملی (اختیاری)</label>
+                    <input type="text" id="nationalId" placeholder="برای صدور فاکتور" style="direction:ltr">
+                </div>
+                <button class="btn-register" onclick="register()">رزرو نسخه چاپی</button>
+                <div id="msg" class="success">درخواست شما با موفقیت ثبت شد!</div>
+                <button class="admin-btn" onclick="showLogin()">پنل مدیریت</button>
+            </div>
+        </div>
     </div>
 
     <!-- پنل مدیریت -->
     <div id="adminPanel">
-        <div class="card" style="max-width: 100%;">
-            <h2>لیست ثبت‌نام شده‌ها (از گوگل شیت)</h2>
-            <button onclick="loadData()" style="background: #10b981; margin-bottom: 10px;">بروزرسانی لیست</button>
-            <div style="overflow-x: auto;">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>نام</th>
-                            <th>موبایل</th>
-                            <th>کد ملی</th>
-                            <th>تاریخ</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody"></tbody>
-                </table>
-            </div>
-            <button style="margin-top: 20px; background: #ef4444;" onclick="location.reload()">خروج</button>
+        <h2 style="border:none">لیست رزرو کنندگان کتاب</h2>
+        <button onclick="loadData()" style="background:#10b981; color:white; border:none; padding:10px; border-radius:5px; cursor:pointer">بروزرسانی از گوگل‌شیت</button>
+        <button onclick="location.reload()" style="background:#64748b; color:white; border:none; padding:10px; border-radius:5px; cursor:pointer">خروج</button>
+        <div style="overflow-x:auto">
+            <table>
+                <thead>
+                    <tr>
+                        <th>نام</th>
+                        <th>موبایل</th>
+                        <th>کد ملی</th>
+                        <th>تاریخ</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
         </div>
     </div>
 
     <script>
-        // آدرس وب‌اپ گوگل را اینجا بگذارید
+        // آدرس وب‌اپ گوگل شیت شما
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyhbjA0UaerCHtfqpmqrqDAVSWzWTBAEX5Wep1VyJliH4A-TM1Wba-UAska-QhtD1Vm/exec';
 
         async function register() {
@@ -66,57 +212,37 @@
                 mobile: document.getElementById('mobile').value,
                 nationalId: document.getElementById('nationalId').value
             };
+            if(!data.name || !data.mobile) return alert('لطفاً نام و موبایل را وارد کنید');
 
-            if(!data.name || !data.mobile) return alert('لطفا فیلدها را پر کنید');
-
-            const btn = document.querySelector('button');
-            btn.disabled = true;
-            btn.innerText = 'در حال ارسال...';
+            const btn = document.querySelector('.btn-register');
+            btn.disabled = true; btn.innerText = 'در حال ثبت...';
 
             try {
-                await fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    body: JSON.stringify(data)
-                });
+                await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(data) });
                 document.getElementById('msg').style.display = 'block';
-                document.getElementById('name').value = '';
-                document.getElementById('mobile').value = '';
-                document.getElementById('nationalId').value = '';
+                document.querySelectorAll('input').forEach(i => i.value = '');
             } catch (e) {
-                alert('خطا در اتصال به سرور');
+                alert('خطا در اتصال');
             } finally {
-                btn.disabled = false;
-                btn.innerText = 'ثبت اطلاعات';
+                btn.disabled = false; btn.innerText = 'رزرو نسخه چاپی';
             }
         }
 
         function showLogin() {
-            const pass = prompt('رمز عبور مدیر را وارد کنید:');
-            if (pass === '1234') { // رمز عبور پیش‌فرض
-                document.getElementById('registerForm').style.display = 'none';
+            if (prompt('رمز عبور:') === '1234') {
+                document.getElementById('mainContainer').style.display = 'none';
                 document.getElementById('adminPanel').style.display = 'block';
                 loadData();
-            } else {
-                alert('رمز اشتباه است');
             }
         }
 
         async function loadData() {
             const tbody = document.getElementById('tableBody');
-            tbody.innerHTML = '<tr><td colspan="4">در حال دریافت اطلاعات...</td></tr>';
-            
+            tbody.innerHTML = '<tr><td colspan="4">در حال بارگذاری...</td></tr>';
             try {
-                const response = await fetch(SCRIPT_URL);
-                const data = await response.json();
-                
-                tbody.innerHTML = data.map(row => `
-                    <tr>
-                        <td>${row.name}</td>
-                        <td>${row.mobile}</td>
-                        <td>${row.nationalId}</td>
-                        <td>${row.date}</td>
-                    </tr>
-                `).join('');
+                const res = await fetch(SCRIPT_URL);
+                const data = await res.json();
+                tbody.innerHTML = data.map(r => `<tr><td>${r.name}</td><td>${r.mobile}</td><td>${r.nationalId}</td><td>${r.date}</td></tr>`).join('');
             } catch (e) {
                 tbody.innerHTML = '<tr><td colspan="4">خطا در دریافت اطلاعات</td></tr>';
             }
